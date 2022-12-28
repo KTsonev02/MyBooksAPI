@@ -9,12 +9,13 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MyBooksAPI.Data;
+using MyBooksAPI.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HotelBookingAPI
+namespace MyBooksAPI
 {
     public class Startup
     {
@@ -36,10 +37,13 @@ namespace HotelBookingAPI
             //Configure DBContext with SQL
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(ConnectionString));
 
+            //Configure the services
+            services.AddTransient<BooksService>();
+
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "HotelBookingAPI", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "MyBooksAPI", Version = "v1" });
             });
         }
 
@@ -63,6 +67,8 @@ namespace HotelBookingAPI
             {
                 endpoints.MapControllers();
             });
+
+            AppDbInitializer.Seed(app);
         }
     }
 }
