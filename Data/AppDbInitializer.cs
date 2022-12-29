@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using MyBooksAPI.Data.Models;
 using System;
@@ -26,7 +27,7 @@ namespace MyBooksAPI.Data
                         DateRead = DateTime.Now.AddDays(-10),
                         Rate = 4,
                         Genre = "Biography",
-                        Author = "First Author",
+                        //Author = "First Author",
                         DateAdded = DateTime.Now
                     },
                     new Book()
@@ -36,7 +37,7 @@ namespace MyBooksAPI.Data
                         IsRead = false,
                         Rate = 4,
                         Genre = "Biography",
-                        Author = "Second Author",
+                        //Author = "Second Author",
                         DateAdded = DateTime.Now
                     });
 
@@ -44,6 +45,8 @@ namespace MyBooksAPI.Data
                 }
             }
         }
+
+        
     }
 
 }
