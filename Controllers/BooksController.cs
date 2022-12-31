@@ -12,6 +12,7 @@ namespace MyBooks.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class BooksController : ControllerBase
     {
         public BooksService _booksService;
@@ -20,7 +21,7 @@ namespace MyBooks.Controllers
             _booksService = booksService;
         }
 
-        [HttpGet("get-all-books")]
+        [HttpGet("get-all-books"), Authorize(Roles = "Admin")]
         public IActionResult GetAllBooks()
         {
             var allBooks = _booksService.GetAllBooks();
