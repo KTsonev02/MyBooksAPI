@@ -79,7 +79,13 @@ namespace MyBooksAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            using (var serviceScope = app.ApplicationServices.CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetService<AppDbContext>();
+                AppDbInitializer.SeedAuthors(context);
+                AppDbInitializer.SeedPublishers(context);
+            }
+                if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
