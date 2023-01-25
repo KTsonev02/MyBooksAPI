@@ -20,14 +20,15 @@ namespace MyBooksAPI.Controllers
             _publishersService = publishersService;
         }
 
-        [HttpPost("add-publisher")]
+        [HttpPost("AddPublisher")]
+        [Authorize]
         public IActionResult AddBook([FromBody] PublisherVM publisher)
         {
             _publishersService.AddPublisher(publisher);
             return Ok();
         }
 
-        [HttpGet("get-publisher-books-with-authors/{id}")]
+        [HttpGet("PublisherBooksWithAuthors/{id}")]
         public IActionResult GetPublisherData(int id)
         {
             var _response = _publishersService.GetPublisherData(id);
@@ -35,7 +36,8 @@ namespace MyBooksAPI.Controllers
         }
 
 
-        [HttpDelete("delete-publisher-by-id/{id}")]
+        [HttpDelete("DeletePublisher/{id}")]
+        [Authorize]
         public IActionResult DeletePublisherById(int id)
         {
             try

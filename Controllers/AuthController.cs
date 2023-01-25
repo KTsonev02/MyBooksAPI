@@ -41,7 +41,7 @@ namespace MyBooksAPI.Controllers
          //   return Ok(new { userName, userName2, role});
         }
 
-        [HttpPost("register")]
+        [HttpPost("Register")]
         public async Task<ActionResult<User>> Register(UserDto request)
         {
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
@@ -53,7 +53,7 @@ namespace MyBooksAPI.Controllers
             return Ok(user);
         }
 
-        [HttpPost("login")]
+        [HttpPost("Login")]
         public async Task<ActionResult<string>> Login(UserDto request)
         {
             if (user.Username != request.Username)

@@ -12,7 +12,7 @@ namespace MyBooks.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    
     public class BooksController : ControllerBase
     {
         public BooksService _booksService;
@@ -21,35 +21,39 @@ namespace MyBooks.Controllers
             _booksService = booksService;
         }
 
-        [HttpGet("get-all-books"), Authorize(Roles = "Admin")]
+        [HttpGet("AllBook")] //Authorize(Roles = "Admin")]
+        
         public IActionResult GetAllBooks()
         {
             var allBooks = _booksService.GetAllBooks();
             return Ok(allBooks);
         }
 
-        [HttpGet("get-book-by-id/{id}")]
+        [HttpGet("BookById/{id}")]
         public IActionResult GetBookById(int id)
         {
             var book = _booksService.GetBookById(id);
             return Ok(book);
         }
 
-        [HttpPost("add-book-with-authors")]
+        [HttpPost("BookWithAuthors")]
+        [Authorize]
         public IActionResult AddBook([FromBody] BookVM book)
         {
             _booksService.AddBookWithAuthors(book);
             return Ok();
         }
 
-        [HttpPut("update-book-by-id/{id}")]
+        [HttpPut("UpdateBook/{id}")]
+        [Authorize]
         public IActionResult UpdateBookById(int id, [FromBody] BookVM book)
         {
             var updatedBook = _booksService.UpdateBookById(id, book);
             return Ok(updatedBook);
         }
 
-        [HttpDelete("delete-book-by-id/{id}")]
+        [HttpDelete("DeleteBook/{id}")]
+        [Authorize]
         public IActionResult DeleteBookById(int id)
         {
             _booksService.DeleteBookById(id);

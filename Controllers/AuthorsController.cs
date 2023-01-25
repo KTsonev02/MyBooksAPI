@@ -14,6 +14,7 @@ namespace MyBooksAPI.Controllers
     [Route("api/[controller]")]
     [ApiController]
     
+
     public class AuthorsController : ControllerBase
     {
         private AuthorsService _authorsService;
@@ -22,14 +23,15 @@ namespace MyBooksAPI.Controllers
             _authorsService = authorsService;
         }
 
-        [HttpPost("add-author")]
+        [HttpPost("AddAuthor")]
+        [Authorize]
         public IActionResult AddBook([FromBody] AuthorVM author)
         {
             _authorsService.AddAuthor(author);
             return Ok();
         }
 
-        [HttpGet("get-author-with-books-by-id/{id}")]
+        [HttpGet("AuthorWithBooks/{id}")]
         public IActionResult GetAuthorWithBooks(int id)
         {
             var response = _authorsService.GetAuthorWithBooks(id);
