@@ -6,11 +6,71 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+﻿using CsvHelper;
+using System.Globalization;
+using System.IO;
 
 namespace MyBooksAPI.Data
 {
     public class AppDbInitializer
     {
+        public static void SeedPublishers(AppDbContext context)
+        {
+            if (context.Publishers.Any())
+            {
+                return;
+            }
+
+            using var reader = new StreamReader("Books.csv");
+            using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
+
+            csv.Read();
+            csv.ReadHeader();
+
+            while (csv.Read())
+            {
+                string publisherName = csv.GetField("publisher");
+
+                if (string.IsNullOrEmpty(publisherName) || context.Publishers.Any(p => p.Name == publisherName))
+                {
+                    continue;
+                }
+
+                var publisher = new Publisher { Name = publisherName };
+                context.Publishers.Add(publisher);
+                context.SaveChanges();
+
+            }
+        }
+        public static void SeedAuthors(AppDbContext context)
+        {
+            if (context.Authors.Any())
+            {
+               return;
+            }
+
+            using var reader = new StreamReader("Books.csv");
+            using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
+
+            csv.Read();
+            csv.ReadHeader();
+
+            while (csv.Read())
+            {
+                string[] authorNames = csv.GetField("author").Split(",");
+                foreach (string name in authorNames)
+                {
+                    if (string.IsNullOrEmpty(name) || context.Authors.Any(a => a.FullName == name))
+                    {
+                        continue;
+                    }
+
+                    var author = new Author { FullName = name };
+                    context.Authors.Add(author);
+                    context.SaveChanges();
+                }
+            }
+        }
         public static void Seed(IApplicationBuilder applicationBuilder)
         {
             using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
@@ -41,8 +101,10 @@ namespace MyBooksAPI.Data
                         DateAdded = DateTime.Now
                     });
 
+
                     context.SaveChanges();
                 }
+
             }
         }
 
