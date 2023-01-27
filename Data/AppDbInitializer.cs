@@ -87,7 +87,6 @@ namespace MyBooksAPI.Data
                         DateRead = DateTime.Now.AddDays(-10),
                         Rate = 4,
                         Genre = "Biography",
-                        //Author = "First Author",
                         DateAdded = DateTime.Now
                     },
                     new Book()
@@ -97,7 +96,6 @@ namespace MyBooksAPI.Data
                         IsRead = false,
                         Rate = 4,
                         Genre = "Biography",
-                        //Author = "Second Author",
                         DateAdded = DateTime.Now
                     });
 
