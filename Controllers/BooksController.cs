@@ -21,7 +21,7 @@ namespace MyBooks.Controllers
             _booksService = booksService;
         }
 
-        [HttpGet("AllBook")] //Authorize(Roles = "Admin")]
+        [HttpGet("AllBook")] 
         
         public IActionResult GetAllBooks()
         {
